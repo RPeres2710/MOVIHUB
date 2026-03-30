@@ -103,7 +103,7 @@
 
     .logo { display: flex; align-items: center; gap: 16px; text-decoration: none; }
 
-    .Logo-Movisafe.png { width: 140px; height: auto; display: block; }
+    .logo-img { width: 140px; height: auto; display: block; }
 
     .logo-caption {
       font-family: 'IBM Plex Mono', monospace;
@@ -311,7 +311,7 @@
   <header>
     <a class="logo" href="#">
       <div>
-        <img class="logo-img" src="/MOVIHUB/Logo-Movisafe.png" alt="Movisafe">
+        <img class="logo-img" src="./Logo-Movisafe.png" alt="Movisafe">
         <div class="logo-caption">Centro de Resposta Imediata CRI24</div>
       </div>
     </a>
@@ -395,6 +395,27 @@
       </div>
     </a>
 
+    <!-- Controle de Frequência -->
+    <a class="card card--blue" href="https://rperes2710.github.io/MOVISAFE-Frequencia/" target="_blank" data-auth="frequencia">
+      <div class="card-icon">
+        <svg viewBox="0 0 22 22" fill="none">
+          <circle cx="11" cy="11" r="7.5" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M11 6.2V11.2L14.5 13.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.2 3.8l-1.2-1.4M14.8 3.8l1.2-1.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-cat">RH</div>
+      <div class="card-title">Controle de Frequência</div>
+      <div class="card-desc">Registro e acompanhamento de frequência das equipes Movisafe.</div>
+      <div class="card-footer">
+        <span class="card-tag">Frequência</span>
+        <div class="card-cta">
+          Acessar
+          <svg viewBox="0 0 11 11" fill="none"><path d="M1.5 9.5L9.5 1.5M9.5 1.5H3.5M9.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
     <!-- OD Dashboard -->
     <a class="card card--orange" href="https://lookerstudio.google.com/reporting/55074718-c462-436b-b4f4-020e0782b16b" target="_blank">
       <div class="card-icon">
@@ -463,19 +484,37 @@
   <!-- FOOTER -->
   <footer>
     <span>© 2025 Movisafe · Todos os direitos reservados</span>
-    <span>6 serviços ativos</span>
+    <span>7 serviços ativos</span>
   </footer>
 
 </div>
 
 <script>
   document.addEventListener('click', (event) => {
-    const link = event.target.closest('a[data-auth="rh"]');
+    const link = event.target.closest('a[data-auth]');
     if (!link) return;
     event.preventDefault();
-    const user = prompt('Usuário:');
-    const pass = prompt('Senha:');
-    if (user === 'ROMARIO PERES' && pass === '0510') {
+
+    const authKey = link.getAttribute('data-auth');
+    const user = (prompt('Usuário:') || '').trim().toUpperCase();
+    const pass = (prompt('Senha:') || '').trim();
+
+    const authMap = {
+      rh: [
+        { user: 'ROMARIO PERES', pass: '0510' },
+        { user: 'LOAN HEITOR', pass: '3341' },
+      ],
+      frequencia: [
+        { user: 'ROMARIO PERES', pass: '0510' },
+        { user: 'LOAN HEITOR', pass: '3341' },
+      ],
+    };
+
+    const allowed = (authMap[authKey] || []).some((cred) => {
+      return cred.user === user && cred.pass === pass;
+    });
+
+    if (allowed) {
       window.open(link.href, link.target || '_self');
     } else {
       alert('Usuário ou senha inválidos.');
@@ -484,5 +523,3 @@
 </script>
 </body>
 </html>
-
-
